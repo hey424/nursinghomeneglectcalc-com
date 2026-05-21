@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const title = 'Nursing Home Neglect Damages Calculator | nursinghomeneglectcalc.com';
+const description = 'Estimate potential damages for nursing home neglect or abuse: medical costs, pain and suffering, and enhanced remedies under elder abuse statutes. Free, informational.';
+---
+<BaseLayout title={title} description={description}>
+  <h1>Nursing Home Neglect Damages Calculator</h1>
+  <p><em>Reviewed by Aspen Lockwood (AL), Editor-in-Chief. Updated May 2026.</em></p>
+  <p>Nursing home residents have federally protected rights under the Nursing Home Reform Act of 1987 and state elder abuse statutes. When facilities fail to provide adequate care — resulting in pressure sores, falls, malnutrition, medication errors, or physical abuse — residents and their families may pursue civil claims for compensatory damages, enhanced remedies under elder abuse statutes, and in cases of intentional abuse, punitive damages. This calculator estimates potential recovery.</p>
+  <h2>Run the estimate</h2>
+  <form id="calc" novalidate>
+    <label for="harm-type">Primary harm type</label>
+    <select id="harm-type">
+      <option value="pressure-sore">Pressure sore (bedsore) — stage 3 or 4</option>
+      <option value="fall">Fall causing fracture or serious injury</option>
+      <option value="malnutrition">Malnutrition or dehydration requiring hospitalization</option>
+      <option value="medication">Medication error causing serious harm</option>
+      <option value="abuse">Physical or sexual abuse</option>
+      <option value="wrongful-death">Wrongful death from neglect</option>
+    </select>
+    <label for="medical-costs">Medical costs resulting from neglect (USD)</label>
+    <input id="medical-costs" type="number" value="20000" min="0" />
+    <label for="elder-abuse-statute">State elder abuse statute with enhanced remedies?</label>
+    <select id="elder-abuse-statute">
+      <option value="yes">Yes — state has enhanced remedies / attorney fees for elder abuse</option>
+      <option value="no">No / unclear</option>
+    </select>
+    <label for="intentional">Was the conduct intentional or reckless (not just negligent)?</label>
+    <select id="intentional">
+      <option value="no">Negligent — facility failed to meet standard of care</option>
+      <option value="yes">Intentional or reckless — deliberate abuse, gross neglect</option>
+    </select>
+    <button type="submit">Estimate damages</button>
+  </form>
+  <p id="result" aria-live="polite"></p>
+  <h2>How nursing home neglect claims work</h2>
+  <p>Claims may be brought under: (1) negligence / medical malpractice (failure to meet the standard of care); (2) state elder abuse and dependent adult civil protection statutes (which often provide enhanced damages, attorney fees, and lower burden of proof); and (3) Section 1983 for Medicaid/Medicare-certified facilities with systemic rights violations. Most successful claims involve both negligence and elder abuse statute theories.</p>
+  <h2>Where to learn more</h2>
+  <p>See <a href="/guides/how-nursing-home-neglect-claims-work">how nursing home neglect claims work</a>, <a href="/guides/types-of-nursing-home-neglect">types of nursing home neglect</a>, <a href="/guides/what-to-do-after-nursing-home-neglect">what to do after nursing home neglect</a>, and <a href="/guides/nursing-home-misconceptions">common misconceptions</a>.</p>
+  <script>
+    document.getElementById('calc').addEventListener('submit', e => {
+      e.preventDefault();
+      const harmType = document.getElementById('harm-type').value;
+      const medCosts = parseFloat(document.getElementById('medical-costs').value)||0;
+      const elderStatute = document.getElementById('elder-abuse-statute').value==='yes';
+      const intentional = document.getElementById('intentional').value==='yes';
+      const painBase = {
+        'pressure-sore':80000,'fall':60000,'malnutrition':50000,
+        'medication':70000,'abuse':150000,'wrongful-death':300000
+      }[harmType];
+      let painSuffering = Math.max(painBase, medCosts * 3);
+      if (elderStatute) painSuffering *= 1.5; // enhanced remedies
+      const punitive = intentional ? painSuffering * 1.0 : 0;
+      const total = medCosts + painSuffering + punitive;
+      const fmt = n=>'$'+Math.round(n).toLocaleString();
+      document.getElementById('result').innerHTML =
+        `<strong>Estimated range: ${fmt(total*0.5)} &ndash; ${fmt(total*1.4)}</strong><br>Medical costs: ${fmt(medCosts)} &bull; Pain &amp; suffering: ${fmt(painSuffering)} &bull; Punitive: ${fmt(punitive)}<br><em>Elder abuse statutes in many states provide attorney fees for prevailing plaintiffs — hire a nursing home neglect attorney at no upfront cost in most cases.</em>`;
+    });
+  </script>
+</BaseLayout>
