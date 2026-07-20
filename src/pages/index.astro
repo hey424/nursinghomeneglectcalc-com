@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadCapture from '../components/LeadCapture.astro';
 const title = 'Nursing Home Neglect Damages Calculator | nursinghomeneglectcalc.com';
 const description = 'Estimate potential damages for nursing home neglect or abuse: medical costs, pain and suffering, and enhanced remedies under elder abuse statutes. Free, informational.';
 ---
@@ -32,11 +33,14 @@ const description = 'Estimate potential damages for nursing home neglect or abus
     </select>
     <button type="submit">Estimate damages</button>
   </form>
-  <p id="result" aria-live="polite"></p>
+  
+
+  <LeadCapture caseType="nursing_home_neglect" caseTypeLabel="Nursing Home Neglect" />
+<p id="result" aria-live="polite"></p>
   <h2>How nursing home neglect claims work</h2>
   <p>Claims may be brought under several overlapping legal theories: negligence or medical malpractice (failure to meet the standard of care for a long-term care facility); state elder abuse and dependent adult civil protection statutes (which provide enhanced damages, mandatory attorney fees, and sometimes a lower burden of proof); and Section 1983 civil rights claims for systemic violations at Medicaid/Medicare-certified facilities. Most successful claims pursue both negligence and elder abuse statute theories to maximize available remedies. CMS inspection reports and state health department deficiency citations are frequently the most powerful evidence of systemic facility failure.</p>
   <h2>Where to learn more</h2>
-  <p>See <a href="/guides/how-nursing-home-neglect-claims-work">how nursing home neglect claims work</a>, <a href="/guides/types-of-nursing-home-neglect">types of nursing home neglect</a>, <a href="/guides/what-to-do-after-nursing-home-neglect">what to do after nursing home neglect</a>, and <a href="/guides/nursing-home-misconceptions">common misconceptions</a>.</p>
+  <p>See <a href="/guides/how-nursing-home-neglect-claims-work/">how nursing home neglect claims work</a>, <a href="/guides/types-of-nursing-home-neglect/">types of nursing home neglect</a>, <a href="/guides/what-to-do-after-nursing-home-neglect/">what to do after nursing home neglect</a>, and <a href="/guides/nursing-home-misconceptions/">common misconceptions</a>.</p>
   <script>
     document.getElementById('calc').addEventListener('submit', e => {
       e.preventDefault();
